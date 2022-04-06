@@ -5,9 +5,8 @@ using Xunit;
 
 namespace Performance
 {
-    public class CollectionTests
+    public class CollectionTests : TestBase
     {
-        private readonly long _Iterations = 1000000;
         private readonly HashSet<object> _HashSet = new();
         private readonly HashSet<int> _PopulatedHashSet = new(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 });
         //private object[] _Array = Array.Empty<object>();
@@ -15,31 +14,11 @@ namespace Performance
         private readonly List<object> _List = new();
         private readonly List<int> _PopulatedList = new() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
         private readonly Dictionary<int, int> _PopulatedDictionary = new() { { 0, 0 }, { 1, 1 }, { 2, 2 }, { 3, 3 }, { 4, 4 }, { 5, 5 }, { 6, 6 }, { 7, 7 }, { 8, 8 }, { 9, 9 }, { 10, 10 } };
-        private readonly Random _Rand = new();
 
         [Fact]
-        public void CheckBool()
+        public void Tuple()
         {
-            IterateOverAction(() =>
-            {
-                bool test = true;
-                if (test is not true)
-                {
-                    throw new Exception();
-                }
-            });
-        }
 
-        [Fact]
-        public void CheckType()
-        {
-            IterateOverAction(() =>
-            {
-                if (this.GetType() != typeof(CollectionTests))
-                {
-                    throw new Exception();
-                }
-            });
         }
 
         [Fact]
@@ -192,23 +171,6 @@ namespace Performance
                     System.Diagnostics.Debug.WriteLine(_PopulatedDictionary[f].GetType());
                 }
             });
-        }
-
-        private void IterateOverAction(Action action)
-        {
-            for (int i = 0; i < _Iterations; i++)
-            {
-                action();
-            }
-        }
-
-        private void IterateOverAction(Action<int> action)
-        {
-            for (int i = 0; i < _Iterations; i++)
-            {
-                int r = _Rand.Next(0, 10);
-                action(r);
-            }
         }
     }
 }
